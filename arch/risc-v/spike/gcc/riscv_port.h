@@ -23,6 +23,6 @@
 #define CLINT_MTIMECMP  0x4000
 #define CLINT_MTIME     0xBFF8
 
-void riscv_cpu_init();
+#define MCAUSE_EXP_CODE_MASK 0x7FFFFFFF
 
-#endif // _RISCV_PORT_H_
+#endif /* _RISCV_PORT_H_ */

@@ -1,3 +1,20 @@
+/*----------------------------------------------------------------------------
+ * Tencent is pleased to support the open source community by making TencentOS
+ * available.
+ *
+ * Copyright (C) 2019 THL A29 Limited, a Tencent company. All rights reserved.
+ * If you have downloaded a copy of the TencentOS binary from Tencent, please
+ * note that the TencentOS binary is licensed under the BSD 3-Clause License.
+ *
+ * If you have downloaded a copy of the TencentOS source code from Tencent,
+ * please note that TencentOS source code is licensed under the BSD 3-Clause
+ * License, except for the third-party components listed below which are
+ * subject to different license terms. Your integration of TencentOS into your
+ * own projects may require compliance with the BSD 3-Clause License, as well
+ * as the other licenses applicable to the third-party components included
+ * within TencentOS.
+ *---------------------------------------------------------------------------*/
+
 #include <tos.h>
 
 __STATIC__ void tick_task_place(k_task_t *task, k_tick_t timeout)
@@ -54,21 +71,10 @@ __STATIC__ void tick_task_takeoff(k_task_t *task)
     TOS_CPU_INT_ENABLE();
 }
 
-__KERNEL__ k_err_t tick_list_add(k_task_t *task, k_tick_t timeout)
+__KERNEL__ void tick_list_add(k_task_t *task, k_tick_t timeout)
 {
-    if (timeout == TOS_TIME_NOWAIT) {
-        return K_ERR_DELAY_ZERO;
-    }
-
-    if (timeout == TOS_TIME_FOREVER) {
-        return K_ERR_DELAY_FOREVER;
-    }
-
-    task->tick_expires = timeout;
-
     tick_task_place(task, timeout);
     task_state_set_sleeping(task);
-    return K_ERR_NONE;
 }
 
 __KERNEL__ void tick_list_remove(k_task_t *task)
